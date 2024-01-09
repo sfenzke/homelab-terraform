@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"almalinux_vm","Source":"./almalinux_vm","Dir":"almalinux_vm"},{"Key":"almalinux_vm.proxmox_provider","Source":"../proxmox_provider","Dir":""},{"Key":"proxmox_provider","Source":"./proxmox_provider","Dir":"proxmox_provider"}]}
