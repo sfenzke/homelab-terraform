@@ -11,7 +11,7 @@ resource "proxmox_vm_qemu" "almalinux_vm" {
         name = "${var.vm_name}"
         desc = "AlmaLinux-Server"
         target_node = "pve0${var.target_node}"
-        sshkeys = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDRju8MB/kGJeA+XRj9JEEklMKWdt4+u/BDWVe7/kuEXCjHcIRbE7Nf4j2QNsH1Gmqcd4SjjAvkNTcKlvI2/CFed2SHr/7zLEe8tBUZzY3mhGoj9A9WtluJw3l+Qrh0q/sDuNefd2paewDFfuyVoQCjc9DQZu47fcFMNBJj8qcQEM96CyB6NwVtCvycrrqc/9h3zeG7Q5+pOKlQ2kHhSHO0UYMu76kjNjapU8RvsZvPRFmlCCSB2eXtV3VaiddguF5+HbNjul1PtVomzVQIa0eKg0JuPmiROoL+7rXjNYoZWPqQQXCgmuIWjZ1ghNONoBqNWZ7sCKatJjI27Teg2msF94Y+1/EAQZkOGc+ZxhVj3foIM1oATBMce1t0pXHR8aJ12G+R7CILFzshu32FOqD4RHjNB701wdbuAeMeqdqG+BqBWke1LzKPDHztGHtY8oJLFrOBRO3nwsLMDK+ZoZRDdDv8s3pK2Any+Ivpqiby1z4H5a9S0uvws0DBOwaiAQs="
+        sshkeys = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCNHLe3/XOXcNKShXpHo2r5aeBBs/jr4GoNvdjkfrT1PhywYKZSA1l5Wu9KwvkYl0K80hjaCWXXTpIy7T9ggIpIEpxJmPz1NvWxXronYCf32VTRrnfLjIxKHg03mx9XFEn4lGa+H8Kpd2Uf4qQr47xOPFW8cuSLt06bSPl22J0wy7Y3ZemJkHweTY4tJnye06a+s6fcUb8UOkz5B5eySj8fnyR0uMfnVtjlJgT2QBUYvdmGpqfPZvvuMuiD0yIR5E4jp/ZUIcVm/3KQQxGZXUbBiK2deFnXSGZKVl+o9dPIrt6muho8IcN2s3H6WznY5GxJyu5QKVj4tqCpwU84EmTnfQZCOv6cQNSeMgwWjxmqT5VCuU2aXHyVgust7Ccg1IyDQh9XTUay1cw2ctWGbF4WeF59S6CRr/TQ7GTxWob275X2O+LZbzcqBBiu+8JkUzcNhd9Z1kYR+pt2NC2Bk7QBhc/209mFAu5rQH5MDuf5qHXFZ0MUGSX4qUyHcsgQUkc="
         agent = 1
         clone = "almalinux9.3-ci"
         qemu_os = "l26"
@@ -44,5 +44,5 @@ resource "proxmox_vm_qemu" "almalinux_vm" {
         os_type = "cloud-init"
         ipconfig0 = "ip=${var.ip}/24,gw=192.168.7.1"
         nameserver = "192.168.6.2"
-        ciuser = "tk"
+        ciuser = "ansible"
 }
