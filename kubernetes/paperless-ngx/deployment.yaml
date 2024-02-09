@@ -17,24 +17,6 @@ spec:
         runAsGroup: 1000
         runAsUser: 1000
         fsGroup: 1000
-      # initContainers:
-      #   - name: nfx-fixer
-      #     image: alpine
-      #     securityContext:
-      #       runAsUser: 0
-      #     volumeMounts:
-      #     - name: paperless-consume
-      #       mountPath: /consume
-      #     - name: paperless-export
-      #       mountPath: /export
-      #     - name: paperless-data
-      #       mountPath: /data
-      #     - name: paperless-media
-      #       mountPath: /media
-      #     command:
-      #     - sh
-      #     - -c
-      #     - (chmod 0777 /consume; chgrp 1000 /consume; chmod 0775 /export; chgrp 1000 /export; chmod 0775 /data; chgrp 1000 /data; chmod 0775 /media; chgrp 1000 /media)
       containers:
       - name: broker
         image: docker.io/library/redis:7
@@ -57,10 +39,6 @@ spec:
           - name: PAPERLESS_OCR_LANGUAGE
             value: deu+eng
         volumeMounts:
-          # - name: paperless-consume
-          #   mountPath: /usr/src/paperless/consume
-          # - name: paperless-export
-          #   mountPath: /usr/src/paperless/export
           - name: paperless-data
             mountPath: /usr/src/paperless/data
           - name: paperless-media
