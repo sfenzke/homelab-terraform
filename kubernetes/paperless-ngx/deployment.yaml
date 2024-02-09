@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-ngx
+  namespace: paperless-ngx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paperless-ngx
+  template:
+    metadata:
+      labels:
+        app: paperless-ngx
+    spec:
+      securityContext:
+        runAsGroup: 1000
+        runAsUser: 1000
+        fsGroup: 1000
+      # initContainers:
+      #   - name: nfx-fixer
+      #     image: alpine
+      #     securityContext:
+      #       runAsUser: 0
+      #     volumeMounts:
+      #     - name: paperless-consume
+      #       mountPath: /consume
+      #     - name: paperless-export
+      #       mountPath: /export
+      #     - name: paperless-data
+      #       mountPath: /data
+      #     - name: paperless-media
+      #       mountPath: /media
+      #     command:
+      #     - sh
+      #     - -c
+      #     - (chmod 0777 /consume; chgrp 1000 /consume; chmod 0775 /export; chgrp 1000 /export; chmod 0775 /data; chgrp 1000 /data; chmod 0775 /media; chgrp 1000 /media)
+      containers:
+      - name: broker
+        image: docker.io/library/redis:7
+        volumeMounts:
+            - name: redis-cache
+              mountPath: /data
+      - name: paperless-ngx
+        image: ghcr.io/paperless-ngx/paperless-ngx:latest
+        ports:
+          - containerPort: 8000
+        env:
+          - name: PAPERLESS_REDIS
+            value: redis://localhost:6379
+          - name: PAPERLESS_TIME_ZONE
+            value: Europe/Berlin
+          - name: PAPERLESS_ADMIN_USER
+            value: sfenzke
+          - name: PAPERLESS_ADMIN_PASSWORD
+            value: changeme
+          - name: PAPERLESS_OCR_LANGUAGE
+            value: deu+eng
+        volumeMounts:
+          # - name: paperless-consume
+          #   mountPath: /usr/src/paperless/consume
+          # - name: paperless-export
+          #   mountPath: /usr/src/paperless/export
+          - name: paperless-data
+            mountPath: /usr/src/paperless/data
+          - name: paperless-media
+            mountPath: /usr/src/paperless/media
+      volumes:
+        - name: redis-cache
+          emptyDir:
+            sizeLimit: 1Gi
+        # - name: paperless-consume
+        #   nfs:
+        #     path: /volume1/documents/paperless/consume
+        #     server: 192.168.178.25
+        # - name: paperless-export
+        #   nfs:
+        #     path: /volume1/documents/paperless/export
+        #     server: 192.168.178.25
+        - name: paperless-data
+          persistentVolumeClaim:
+            claimName: paperless-data
+        - name: paperless-media
+          persistentVolumeClaim:
+            claimName: paperless-media

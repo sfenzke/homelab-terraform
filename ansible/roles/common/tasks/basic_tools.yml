@@ -1,0 +1,5 @@
+- name: 'install basic tools'
+  ansible.builtin.package:
+    name: 
+      - vim
+  become: true

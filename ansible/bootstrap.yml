@@ -1,0 +1,7 @@
+- name: Bootstrap a new VM
+  hosts: all
+  roles:
+    - name: common stuff
+      role: common
+      tags: 
+        - common

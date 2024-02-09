@@ -1,0 +1,4 @@
+- name: "Include basic_tools"
+  ansible.builtin.include_tasks: basic_tools.yml
+  tags:
+    - basic_tools
