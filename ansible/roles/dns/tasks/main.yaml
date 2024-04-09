@@ -1,0 +1,29 @@
+---
+- name: 'Install bind'
+  ansible.builtin.package:
+    name: 'bind'
+    state: 'present'
+
+- name: "Test"
+  ansible.builtin.debug:
+    var: item.value.reverse
+  loop: '{{ zones | dict2items }}'
+
+- name: 'Configure named'
+  ansible.builtin.template:
+    src: 'named.conf.j2'
+    dest: '/etc/named.conf'
+  notify: 'Restart named'
+
+- name: 'Configure zones'
+  ansible.builtin.template:
+    src: 'zone.j2'
+    dest: '/var/named/{{ item.key }}'
+  loop: '{{ zones | dict2items }}'
+  notify: 'Restart named'
+
+- name: "Enable and start named"
+  ansible.builtin.systemd_service:
+    name: 'named'
+    enabled: true
+    state: 'started'

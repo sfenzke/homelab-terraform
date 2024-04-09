@@ -1,0 +1,4 @@
+- name: "Restart named"
+  ansible.builtin.systemd_service:
+    name: 'named'
+    state: 'restarted'
