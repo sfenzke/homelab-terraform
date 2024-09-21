@@ -1,3 +1,15 @@
+variable "template" {
+    description = "template to clone from"
+    type = string
+    default = "almalinux9.3-ci"
+}
+
+variable "description" {
+    description = "Description of the new VM"
+    type = string
+    default = ""
+}
+
 variable "ip" {
     description = "The IP of the system"
     type = string
