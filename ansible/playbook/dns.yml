@@ -1,6 +1,0 @@
----
-- name: 'setup dns'
-  hosts: 'dns'
-  become: true
-  roles:
-    - role: 'dns'

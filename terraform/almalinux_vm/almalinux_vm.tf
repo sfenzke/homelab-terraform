@@ -13,9 +13,10 @@ resource "proxmox_vm_qemu" "almalinux_vm" {
         target_node = "pve0${var.target_node}"
         sshkeys = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCNHLe3/XOXcNKShXpHo2r5aeBBs/jr4GoNvdjkfrT1PhywYKZSA1l5Wu9KwvkYl0K80hjaCWXXTpIy7T9ggIpIEpxJmPz1NvWxXronYCf32VTRrnfLjIxKHg03mx9XFEn4lGa+H8Kpd2Uf4qQr47xOPFW8cuSLt06bSPl22J0wy7Y3ZemJkHweTY4tJnye06a+s6fcUb8UOkz5B5eySj8fnyR0uMfnVtjlJgT2QBUYvdmGpqfPZvvuMuiD0yIR5E4jp/ZUIcVm/3KQQxGZXUbBiK2deFnXSGZKVl+o9dPIrt6muho8IcN2s3H6WznY5GxJyu5QKVj4tqCpwU84EmTnfQZCOv6cQNSeMgwWjxmqT5VCuU2aXHyVgust7Ccg1IyDQh9XTUay1cw2ctWGbF4WeF59S6CRr/TQ7GTxWob275X2O+LZbzcqBBiu+8JkUzcNhd9Z1kYR+pt2NC2Bk7QBhc/209mFAu5rQH5MDuf5qHXFZ0MUGSX4qUyHcsgQUkc="
         agent = 1
+        ## muss dem Template matchen
         clone = "almalinux9.3-ci"
-        qemu_os = "l26"
         # this l26 is a small l like linux
+        qemu_os = "l26"
         cores = "${var.cpu_cores}"
         sockets = 1
         cpu = "host"
@@ -26,12 +27,16 @@ resource "proxmox_vm_qemu" "almalinux_vm" {
                 type = "std"
         }
 
-        disk {
-                storage = "vm_disks"
-                type = "scsi"
-                size = "${var.disk_size}"
-                discard = "on"
-                ssd = "1"
+        disks {
+                scsi {
+                        scsi0 {
+                                disk {
+                                        storage = "vm_disks"
+                                        size = "${var.disk_size}"
+                                        discard = true
+                                }
+                        }
+                }
         }
 
         network {
@@ -39,7 +44,6 @@ resource "proxmox_vm_qemu" "almalinux_vm" {
                 model = "virtio"
         }
 
-        ## muss dem Template matchen
 
         os_type = "cloud-init"
         ipconfig0 = "ip=${var.ip}/24,gw=192.168.7.1"
