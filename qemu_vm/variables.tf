@@ -25,11 +25,6 @@ variable "vm_name" {
     type = string
 }
 
-variable "disk_size" {
-    description = "Size of the new disk"
-    type = string
-}
-
 variable "memory_size" {
     description = "Size of the memory of the vm"
     type = number
@@ -38,4 +33,9 @@ variable "memory_size" {
 variable "cpu_cores" {
     description = "amount of assigned cpu cores"
     type = number
+}
+
+variable "disk_size" {
+    description = "Size of the new disk"
+    type = string
 }

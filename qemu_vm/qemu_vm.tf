@@ -33,9 +33,9 @@ resource "proxmox_vm_qemu" "qemu_vm" {
                                 disk {
                                         storage = "vm_disks"
                                         size = "${var.disk_size}"
-                                        discard = true
                                 }
                         }
+
                 }
                 ide {
                         ide2 {
