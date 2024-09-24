@@ -1,7 +1,7 @@
 module "gittea" {
   source = "./qemu_vm"
 
-  ip          = "192.168.7.10"
+  ip          = "192.168.7.11"
   target_node = "1"
   vm_name     = "gittea01v"
   disk_size  = "100G"
