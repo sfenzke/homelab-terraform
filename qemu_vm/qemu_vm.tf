@@ -54,7 +54,7 @@ resource "proxmox_vm_qemu" "qemu_vm" {
 
         os_type = "cloud-init"
         ipconfig0 = "ip=${var.ip}/24,gw=192.168.7.1"
-        nameserver = "192.168.178.2"
+        nameserver = "192.168.7.2"
         ciuser = "ansible"
         boot = "order=scsi0;ide2"
 }
